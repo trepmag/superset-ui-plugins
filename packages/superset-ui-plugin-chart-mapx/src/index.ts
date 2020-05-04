@@ -30,7 +30,7 @@ const metadata = new ChartMetadata({
 export default class MapXChartPlugin extends ChartPlugin {
   constructor() {
     super({
-      loadChart: () => import('./MapXChart'),
+      loadChart: () => import('./MapX'),
       metadata,
       transformProps,
     });

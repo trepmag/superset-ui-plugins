@@ -25,7 +25,7 @@ export type MapXChartProps = {
   urlSelect: string;
 };
 
-export default class MapXChart extends React.PureComponent<MapXChartProps> {
+export default class MapX extends React.PureComponent<MapXChartProps> {
   render() {
     const { height, width, urlSelect } = this.props;
     return (
