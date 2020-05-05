@@ -28,6 +28,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@fxi/mxsdk": "^1.6.79-alpha",
     "@types/react": "^16"
   },
   "peerDependencies": {

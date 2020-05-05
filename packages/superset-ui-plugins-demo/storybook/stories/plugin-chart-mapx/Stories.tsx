@@ -31,7 +31,7 @@ export default [
         }}
       />
     ),
-    storyName: 'Mapx',
+    storyName: 'MapX',
     storyPath: 'plugin-chart-mapx|MapXChartPlugin',
   },
 ];
