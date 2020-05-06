@@ -24,10 +24,11 @@ export type MapXChartProps = {
   height: string;
   width: string;
   data: { x: number; y: number }[];
-  urlSelect: string;
+  project: string;
 };
 
 export default class MapX extends React.PureComponent<MapXChartProps> {
+  sdkManager: any;
   container: HTMLElement | null;
   constructor(props: MapXChartProps) {
     super(props);
@@ -35,10 +36,10 @@ export default class MapX extends React.PureComponent<MapXChartProps> {
   }
 
   componentDidMount() {
-    const { height } = this.props;
-    const mapx = new mxsdk.Manager({
+    const { project, height } = this.props;
+    this.sdkManager = new mxsdk.Manager({
       container: this.container,
-      url: 'https://app.mapx.org/?project=MX-3ZK-82N-DY8-WU2-IGF&language=en',
+      url: `https://app.mapx.org/?project=${project}&language=en`,
       style: {
         width: '100%',
         height: height + 'px',
@@ -50,26 +51,41 @@ export default class MapX extends React.PureComponent<MapXChartProps> {
       },
     });
 
-    mapx.on('ready', () => {
-      /**
-       * Hide views panel
-       */
-      mapx.ask('set_panel_left_visibility', {
-        panel: 'views',
-        show: false,
-      });
+    this.sdkManager.on('ready', () => {
+      // /**
+      //  * Hide views panel
+      //  */
+      // this.sdk.ask('set_panel_left_visibility', {
+      //   panel: 'views',
+      //   show: false,
+      // });
+      //
+      // this.sdk.ask('get_projects').then((p: Array<Object>) => {
+      //   console.log('======');
+      //   console.log(p);
+      // });
 
-      Promise.all([mapx.ask('get_project'), mapx.ask('get_views')]).then(values => {
-        console.log('MapX sdk: project and views available...');
-      });
+      Promise.all([this.sdkManager.ask('get_project'), this.sdkManager.ask('get_views')]).then(
+        values => {
+          console.log('MapX sdk: project and views available...');
+        },
+      );
     });
   }
 
   render() {
+    const { project } = this.props;
+    if (this.sdkManager) {
+      this.sdkManager.ask('set_project', { idProject: project });
+    }
     return (
       <div className="mapx-wrapper">
         <div ref={el => (this.container = el)} />
       </div>
     );
   }
+}
+
+export function getMapX() {
+  return MapX;
 }
